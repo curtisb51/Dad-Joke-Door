@@ -17,6 +17,7 @@ h1 { margin:0; font-size:clamp(26px,6vw,36px); line-height:1.15; letter-spacing:
 .joke { margin:32px 0; }
 #setup { font-size:clamp(21px,5vw,27px); line-height:1.5; margin:0 0 16px; overflow-wrap:anywhere; }
 #punchline { font-size:clamp(22px,5vw,28px); line-height:1.45; font-weight:750; margin:0; overflow-wrap:anywhere; }
+#punchline:empty { display:none; }
 footer { padding-top:21px; border-top:1px solid #e1e5e2; font-size:14px; color:#59645d; line-height:1.65; }
 noscript { display:block; margin:24px 0; }
 @media (max-width:380px) { main { padding:30px 20px; } }
@@ -37,1468 +38,645 @@ noscript { display:block; margin:24px 0; }
 </main>
 <script>
 "use strict";
-// 365 jokes, stored in this file. No accounts, API keys, or services needed.
-// The rotation repeats after 365 days. Keep this order to preserve the schedule.
+// 159 entries from the supplied PDF, in source order, including repeats.
+// No accounts, API keys, or services needed.
+// The list cycles every 159 days; repeated source jokes can appear sooner. Keep this order to preserve the schedule.
 const jokes = [
   {
-    "setup": "Why did the lamp fail the test?",
-    "punchline": "It wasn't very bright."
+    "setup": "What smells better than it tastes?",
+    "punchline": "Your nose."
   },
   {
-    "setup": "What did the pepper say to the salt?",
-    "punchline": "You season things differently."
+    "setup": "What did Godzilla say when he finished eating the Kingdom of Tonga?",
+    "punchline": "Now I want SA- MO – A!"
   },
   {
-    "setup": "How does the moon cut its hair?",
-    "punchline": "Eclipse it."
+    "setup": "Why can’t cats play poker in the jungle?",
+    "punchline": "Too Many Cheetahs!"
   },
   {
-    "setup": "Why did the pineapple turn down a hug?",
-    "punchline": "It was feeling a little prickly."
+    "setup": "If a child refuses to take a nap – are they guilty of resisting arrest?",
+    "punchline": ""
   },
   {
-    "setup": "Why did the pizza maker go broke?",
-    "punchline": "He couldn't make ends meat."
+    "setup": "Did you hear about the kidnapping at school?",
+    "punchline": "It’s okay – he woke up."
   },
   {
-    "setup": "Why did the salad go to the recording studio?",
-    "punchline": "To lay down some fresh beets."
+    "setup": "What do you call a group of apes wanting to start a new company?",
+    "punchline": "Monkey business."
   },
   {
-    "setup": "Why couldn't the sesame seed leave the casino?",
-    "punchline": "It was on a roll."
+    "setup": "What do you call a pudgy Psychic?",
+    "punchline": "A 4-chin teller."
   },
   {
-    "setup": "What do you call a duck that gets all A's?",
-    "punchline": "A wise quacker."
+    "setup": "I went for an interview – they asked me if I could perform under pressure – I said I don’t know about that – but, I could have a pretty good crack at Bohemian Rhapsody.",
+    "punchline": ""
   },
   {
-    "setup": "Why did everyone bring a ladder to the meeting?",
-    "punchline": "They were told to step up their ideas."
+    "setup": "I use to play piano by ear -but now, I just use my hands.",
+    "punchline": ""
   },
   {
-    "setup": "I burned my Hawaiian pizza.",
-    "punchline": "I should have cooked it at aloha temperature."
+    "setup": "I got fired from the canned juice company – apparently, I couldn’t concentrate",
+    "punchline": ""
   },
   {
-    "setup": "Why is a tennis match so loud?",
-    "punchline": "The players raise a racket."
+    "setup": "I once had a dream I was floating on an ocean of orange soda… it was more of a FANTA -sea.",
+    "punchline": ""
   },
   {
-    "setup": "Why did the vacuum cleaner retire?",
-    "punchline": "It was gathering dust."
+    "setup": "I asked my girlfriend to meet me at the gym – she never showed up – I guess we aren’t going to work out.",
+    "punchline": ""
   },
   {
-    "setup": "I tried to tell a chemistry joke.",
-    "punchline": "There was no reaction."
+    "setup": "An apple a day keeps the dr. away- at least if you throw it hard enough at him.",
+    "punchline": ""
   },
   {
-    "setup": "What's a tree's favorite drink?",
-    "punchline": "Root beer."
+    "setup": "In Jamaica apple pie is $3, in the Bahamas apple pie is $4.5 – these are the PIE-RATES of the Caribbean.",
+    "punchline": ""
   },
   {
-    "setup": "What kind of coat is always wet when you put it on?",
-    "punchline": "A coat of paint."
+    "setup": "I think my wife is putting glue on my antique weapons – she denies it – but I’m sticking to my guns",
+    "punchline": ""
   },
   {
-    "setup": "Why was the broom late?",
-    "punchline": "It overswept."
+    "setup": "I ordered a chicken and an egg on line…. I’ll let you know.",
+    "punchline": ""
   },
   {
-    "setup": "What did the corn say when someone complimented it?",
-    "punchline": "Aw, shucks."
+    "setup": "If you see a crime at an apple store – does it make you an iwitness?",
+    "punchline": ""
   },
   {
-    "setup": "Why did the fraction feel nervous about marrying the decimal?",
-    "punchline": "It would have to convert."
+    "setup": "What do you call to monkeys that share an amazon account?",
+    "punchline": "Prime mates"
   },
   {
-    "setup": "Why did the crab refuse to share?",
-    "punchline": "It was shellfish."
+    "setup": "What do you call it when a snowman throws a tantrum?",
+    "punchline": "A meltdown"
   },
   {
-    "setup": "How do you organize a space party?",
-    "punchline": "You planet."
+    "setup": "I decided to sell my vacuum cleaner – it just sucked.",
+    "punchline": ""
   },
   {
-    "setup": "Why did the moth love the classroom?",
-    "punchline": "It was drawn to bright students."
+    "setup": "Two cannibals are eating a comedian – one says I think he tastes funny.",
+    "punchline": ""
   },
   {
-    "setup": "What do you call a bird that works at a construction site?",
-    "punchline": "A crane."
+    "setup": "Why do fathers take an extra pair of socks when they go golfing?",
+    "punchline": "In case they get a hole in one!"
   },
   {
-    "setup": "Why did the tree go to the dentist?",
-    "punchline": "It needed a root canal."
+    "setup": "Dad, did you get a haircut?",
+    "punchline": "No, I got them all cut!"
   },
   {
-    "setup": "What do you call a pile of cats?",
-    "punchline": "A meowtain."
+    "setup": "What's the difference between a man's wallet before & after kids?",
+    "punchline": "There’s pic’s where the money used to be."
   },
   {
-    "setup": "Why are frogs good at baseball?",
-    "punchline": "They're excellent at catching flies."
+    "setup": "What did one ocean say to the other ocean?",
+    "punchline": "Nothing, they just waved."
   },
   {
-    "setup": "Why was Saturn so popular?",
-    "punchline": "It had a nice ring to it."
+    "setup": "I got carded at a liquor store, and my Blockbuster card accidentally fell out. The cashier said never mind.",
+    "punchline": ""
   },
   {
-    "setup": "Why was the singer good at baseball?",
-    "punchline": "She had perfect pitch."
+    "setup": "Why do you think I am afraid for the calendar?",
+    "punchline": "Its days are numbered."
   },
   {
-    "setup": "I used to be a baker.",
-    "punchline": "But I couldn't make enough dough."
+    "setup": "My wife said I should do lunges to stay in shape. That would be a big step forward.",
+    "punchline": ""
   },
   {
-    "setup": "What do you call a sheep covered in chocolate?",
-    "punchline": "A candy baa."
+    "setup": "Why do fathers take an extra pair of socks when they go golfing?",
+    "punchline": "In case they get a hole in one!"
   },
   {
-    "setup": "Why can't you hear a pterodactyl go to the bathroom?",
-    "punchline": "Because the P is silent."
+    "setup": "Singing in the shower is fun until you get soap in your mouth. Then it's a soap opera.",
+    "punchline": ""
   },
   {
-    "setup": "Why did the math book look sad?",
-    "punchline": "It had too many problems."
+    "setup": "What do you call a fish wearing a bowtie?",
+    "punchline": "So-fish-ticated."
   },
   {
-    "setup": "What did one volcano say to the other?",
-    "punchline": "I lava you."
+    "setup": "How do you follow Will Smith in the snow?",
+    "punchline": "You follow the fresh prints."
   },
   {
-    "setup": "What do clouds wear under their clothes?",
-    "punchline": "Thunderwear."
+    "setup": "If April showers bring May flowers, what do May flowers bring?",
+    "punchline": "Pilgrims."
   },
   {
-    "setup": "What do you call fake spaghetti?",
-    "punchline": "An impasta."
-  },
-  {
-    "setup": "What did the flour say during the job interview?",
-    "punchline": "I rise to the occasion."
+    "setup": "I thought the dryer was shrinking my clothes. Turns out it was the refrigerator all along.",
+    "punchline": ""
   },
   {
     "setup": "What do you call a factory that makes okay products?",
     "punchline": "A satisfactory."
   },
   {
-    "setup": "What falls in winter but never gets hurt?",
-    "punchline": "Snow."
+    "setup": "Why can't you ever make a skeleton mad?",
+    "punchline": "You can't get under his skin."
   },
   {
-    "setup": "I ordered a chicken and an egg online.",
-    "punchline": "I'll let you know."
+    "setup": "What do the Eifel Tower and a tapeworm have in common?",
+    "punchline": "- They are both par-is-sites"
   },
   {
-    "setup": "Parallel lines have so much in common.",
-    "punchline": "It's a shame they'll never meet."
-  },
-  {
-    "setup": "What do you call a squirrel with a savings account?",
-    "punchline": "A nest-egg specialist."
-  },
-  {
-    "setup": "What do you call a belt made of watches?",
-    "punchline": "A waist of time."
-  },
-  {
-    "setup": "What do you call a tick on the moon?",
-    "punchline": "A luna-tick."
-  },
-  {
-    "setup": "Why did the mushroom get invited to every party?",
-    "punchline": "He was a fungi."
-  },
-  {
-    "setup": "How does a hedgehog ask for a hug?",
-    "punchline": "Very carefully."
-  },
-  {
-    "setup": "I told my suitcase there would be no vacation this year.",
-    "punchline": "Now I'm dealing with emotional baggage."
-  },
-  {
-    "setup": "Why did the peach get hired?",
-    "punchline": "It had an impressive pit-ch."
-  },
-  {
-    "setup": "Why was the guitar teacher so patient?",
-    "punchline": "He didn't fret over the small things."
-  },
-  {
-    "setup": "Why are fish easy to weigh?",
-    "punchline": "They have their own scales."
-  },
-  {
-    "setup": "Why do melons have weddings?",
-    "punchline": "Because they cantaloupe."
-  },
-  {
-    "setup": "What's a vegetable's favorite martial art?",
-    "punchline": "Carrot-e."
-  },
-  {
-    "setup": "Why do seagulls fly over the sea?",
-    "punchline": "If they flew over the bay, they'd be bagels."
-  },
-  {
-    "setup": "What do you call a bee that can't make up its mind?",
-    "punchline": "A maybe."
-  },
-  {
-    "setup": "Time flies like an arrow.",
-    "punchline": "Fruit flies like a banana."
-  },
-  {
-    "setup": "Why did the snowman look through the carrots?",
-    "punchline": "He was picking his nose."
-  },
-  {
-    "setup": "What do you do with a sick chemist?",
-    "punchline": "If you can't helium and you can't curium, you barium."
-  },
-  {
-    "setup": "What do you call a vegetable that has retired?",
-    "punchline": "A has-bean."
-  },
-  {
-    "setup": "Why did the pony ask for water?",
-    "punchline": "It was a little horse."
-  },
-  {
-    "setup": "What do you call a sad strawberry?",
-    "punchline": "A blueberry."
-  },
-  {
-    "setup": "What's a musician's favorite pastry?",
-    "punchline": "A jam tart."
-  },
-  {
-    "setup": "Why do horses make good project managers?",
-    "punchline": "They know how to rein things in."
-  },
-  {
-    "setup": "What has four wheels and flies?",
-    "punchline": "A garbage truck."
-  },
-  {
-    "setup": "Why was the equal sign so humble?",
-    "punchline": "It knew it wasn't less than or greater than anyone else."
-  },
-  {
-    "setup": "Why was the ant confused?",
-    "punchline": "All its uncles were ants."
-  },
-  {
-    "setup": "What did the computer eat for a snack?",
-    "punchline": "Microchips."
-  },
-  {
-    "setup": "Why can't your nose be 12 inches long?",
-    "punchline": "Because then it would be a foot."
-  },
-  {
-    "setup": "What lights up a soccer stadium?",
-    "punchline": "A soccer match."
-  },
-  {
-    "setup": "What kind of bow can't be tied?",
-    "punchline": "A rainbow."
-  },
-  {
-    "setup": "What do you call a cold dog?",
-    "punchline": "A chili dog."
-  },
-  {
-    "setup": "Why was Cinderella bad at soccer?",
-    "punchline": "She kept running away from the ball."
-  },
-  {
-    "setup": "What runs but never walks?",
-    "punchline": "A river."
-  },
-  {
-    "setup": "I have a joke about time travel.",
-    "punchline": "But you didn't like it."
-  },
-  {
-    "setup": "Why did the filing cabinet get anxious?",
-    "punchline": "It had too many unresolved cases."
-  },
-  {
-    "setup": "Why did the astronaut break up with the moon?",
-    "punchline": "He needed space."
-  },
-  {
-    "setup": "What do you call a fish wearing a bow tie?",
-    "punchline": "Sofishticated."
-  },
-  {
-    "setup": "What do you call two birds in love?",
-    "punchline": "Tweethearts."
-  },
-  {
-    "setup": "Why did the password go to the gym?",
-    "punchline": "To get stronger."
-  },
-  {
-    "setup": "What do you call a rabbit with fleas?",
-    "punchline": "Bugs Bunny."
-  },
-  {
-    "setup": "What's a fruit's favorite crime show?",
-    "punchline": "Law and Orange."
-  },
-  {
-    "setup": "Why did the milk go to school?",
-    "punchline": "To become cultured."
-  },
-  {
-    "setup": "Why did the taco blush?",
-    "punchline": "It saw the salsa dancing."
-  },
-  {
-    "setup": "I couldn't remember how to throw a boomerang.",
-    "punchline": "Then it came back to me."
-  },
-  {
-    "setup": "What do you call a funny mountain?",
-    "punchline": "Hill-arious."
-  },
-  {
-    "setup": "Why did the shoelace get in trouble?",
-    "punchline": "It was too knotty."
-  },
-  {
-    "setup": "What do you call a lazy kangaroo?",
-    "punchline": "A pouch potato."
-  },
-  {
-    "setup": "What did the celery say at the job interview?",
-    "punchline": "I'm looking for a good starting stalk-ary."
-  },
-  {
-    "setup": "What did one melon say to the other?",
-    "punchline": "You're one in a melon."
-  },
-  {
-    "setup": "Why did the door get a promotion?",
-    "punchline": "It opened up new opportunities."
-  },
-  {
-    "setup": "What do snowmen eat for breakfast?",
-    "punchline": "Frosted flakes."
-  },
-  {
-    "setup": "Why did the robot go on vacation?",
-    "punchline": "To recharge its batteries."
-  },
-  {
-    "setup": "Why was the whiteboard so popular?",
-    "punchline": "It was remarkable."
-  },
-  {
-    "setup": "Why was the train good at listening?",
-    "punchline": "It always stayed on track."
-  },
-  {
-    "setup": "What did the banana say to the dog?",
-    "punchline": "Nothing. Bananas can't talk."
-  },
-  {
-    "setup": "Why was the computer tired when it got home?",
-    "punchline": "It had a hard drive."
-  },
-  {
-    "setup": "Why did the gardener plant a light bulb?",
-    "punchline": "She wanted to grow a power plant."
-  },
-  {
-    "setup": "What do you call a fish with no eyes?",
-    "punchline": "Fsh."
-  },
-  {
-    "setup": "Why did the bowl of soup bring an umbrella?",
-    "punchline": "There was a chance of meatballs."
-  },
-  {
-    "setup": "Why did the cupcake start a business?",
-    "punchline": "It wanted a bigger slice of the market."
-  },
-  {
-    "setup": "What did the printer say when it ran out of paper?",
-    "punchline": "I'm drawing a blank."
-  },
-  {
-    "setup": "Why did the clock get called into the office?",
-    "punchline": "It kept tocking back."
-  },
-  {
-    "setup": "What do you call a snowman's dog?",
-    "punchline": "A slush puppy."
-  },
-  {
-    "setup": "What do you call a dangerous rainstorm?",
-    "punchline": "A rain of terror."
-  },
-  {
-    "setup": "Why did the cucumber need a lawyer?",
-    "punchline": "It was in a pickle."
-  },
-  {
-    "setup": "Why do bees have sticky hair?",
-    "punchline": "They use honeycombs."
-  },
-  {
-    "setup": "I bought a dictionary, but all the pages were blank.",
-    "punchline": "I have no words."
-  },
-  {
-    "setup": "Why did the yogurt refuse to fight?",
-    "punchline": "It didn't want to stir things up."
-  },
-  {
-    "setup": "What do you call a dinosaur with an extensive vocabulary?",
-    "punchline": "A thesaurus."
-  },
-  {
-    "setup": "What did the hat say to the scarf?",
-    "punchline": "You hang around. I'll go on ahead."
-  },
-  {
-    "setup": "Why did the student eat his homework?",
-    "punchline": "The teacher said it was a piece of cake."
-  },
-  {
-    "setup": "Why did the cabbage win the race?",
-    "punchline": "It was a head of the competition."
-  },
-  {
-    "setup": "Why did the bread go to therapy?",
-    "punchline": "It had too many things to work through, so it kneaded help."
-  },
-  {
-    "setup": "Why did the owl invite friends over?",
-    "punchline": "He didn't want to be owl by himself."
-  },
-  {
-    "setup": "What did the librarian say when the books fell down?",
-    "punchline": "We've only got our shelves to blame."
-  },
-  {
-    "setup": "Why was the keyboard so sleepy?",
-    "punchline": "It had two shifts."
-  },
-  {
-    "setup": "Why did the programmer quit the band?",
-    "punchline": "There were too many strings attached."
-  },
-  {
-    "setup": "Why did the leaf go to the doctor?",
-    "punchline": "It was feeling green."
-  },
-  {
-    "setup": "Why shouldn't you tell secrets in a cornfield?",
-    "punchline": "Too many ears."
+    "setup": "Dear Math, grow up and solve your own problems.",
+    "punchline": ""
   },
   {
     "setup": "What did the janitor say when he jumped out of the closet?",
     "punchline": "Supplies!"
   },
   {
-    "setup": "Why are frogs so happy?",
-    "punchline": "They eat whatever bugs them."
-  },
-  {
-    "setup": "Why did the calendar ask for a vacation?",
-    "punchline": "Its days were numbered."
-  },
-  {
-    "setup": "My friend said, \"Nothing rhymes with orange.\"",
-    "punchline": "I said, \"No, it doesn't.\""
-  },
-  {
-    "setup": "What do you call an alligator in a vest?",
-    "punchline": "An investigator."
-  },
-  {
-    "setup": "Why did the musician get arrested?",
-    "punchline": "She was in treble."
-  },
-  {
-    "setup": "What do you call an ant who won't go away?",
-    "punchline": "Perman-ant."
-  },
-  {
-    "setup": "Why did the sock join a support group?",
-    "punchline": "It had lost its sole mate."
-  },
-  {
-    "setup": "Why did the teacher wear sunglasses?",
-    "punchline": "Her students were so bright."
-  },
-  {
-    "setup": "Why was the piano locked out?",
-    "punchline": "It lost its keys."
-  },
-  {
-    "setup": "What does cake say when it needs encouragement?",
-    "punchline": "You batter believe in me."
-  },
-  {
-    "setup": "Why did the oyster leave the gym?",
-    "punchline": "It pulled a mussel."
-  },
-  {
-    "setup": "What do you call a snowman in summer?",
-    "punchline": "A puddle."
-  },
-  {
-    "setup": "How does a penguin build its house?",
-    "punchline": "Igloos it together."
-  },
-  {
-    "setup": "What do you call an adventurous egg?",
-    "punchline": "An eggs-plorer."
-  },
-  {
-    "setup": "Why did the obtuse angle go to the beach?",
-    "punchline": "It was over 90 degrees."
-  },
-  {
-    "setup": "Why did the meeting move to the roof?",
-    "punchline": "The team wanted a higher-level discussion."
-  },
-  {
-    "setup": "Want to hear a pizza joke?",
-    "punchline": "Never mind. It's too cheesy."
-  },
-  {
-    "setup": "Why did the pillow get invited to the meeting?",
-    "punchline": "It had some soft skills."
-  },
-  {
-    "setup": "I bought a ceiling fan.",
-    "punchline": "All it does is shout, \"Go, ceiling!\""
-  },
-  {
-    "setup": "Why did the office chair ask for a raise?",
-    "punchline": "It had been supporting everyone for years."
-  },
-  {
-    "setup": "What do you call a fairy that never takes a bath?",
-    "punchline": "Stinker Bell."
-  },
-  {
-    "setup": "What do you call a deer with no eyes?",
-    "punchline": "No eye deer."
-  },
-  {
-    "setup": "What did the salad say outside the locked door?",
-    "punchline": "Lettuce in!"
-  },
-  {
-    "setup": "What do you call a boomerang that won't come back?",
-    "punchline": "A stick."
-  },
-  {
-    "setup": "Two atoms were arguing.",
-    "punchline": "They just couldn't bond."
-  },
-  {
-    "setup": "How many tickles does it take to make an octopus laugh?",
-    "punchline": "Ten-tickles."
-  },
-  {
-    "setup": "I only know 25 letters of the alphabet.",
-    "punchline": "I don't know y."
-  },
-  {
-    "setup": "What kind of water can't freeze?",
-    "punchline": "Hot water."
-  },
-  {
-    "setup": "I got a job at a mirror factory.",
-    "punchline": "It's something I can really see myself doing."
-  },
-  {
-    "setup": "How do rabbits travel?",
-    "punchline": "By hare-plane."
-  },
-  {
-    "setup": "What do you call a potato wearing glasses?",
-    "punchline": "A spec-tater."
-  },
-  {
-    "setup": "I used to be a banker.",
-    "punchline": "But I lost interest."
-  },
-  {
-    "setup": "What do you call a dinosaur that crashes its car?",
-    "punchline": "Tyrannosaurus wrecks."
-  },
-  {
-    "setup": "What do you call a sleeping bull?",
-    "punchline": "A bulldozer."
-  },
-  {
-    "setup": "Why did the eraser feel proud?",
-    "punchline": "It had corrected its mistakes."
-  },
-  {
-    "setup": "Why did the coach go to the bank?",
-    "punchline": "To get his quarterback."
-  },
-  {
-    "setup": "Why did the window get employee of the month?",
-    "punchline": "It brought a fresh perspective."
-  },
-  {
-    "setup": "Why did the tomato turn red?",
-    "punchline": "It saw the salad dressing."
-  },
-  {
-    "setup": "What do you call a snowman on roller skates?",
-    "punchline": "A snowmobile."
-  },
-  {
-    "setup": "What's brown and sticky?",
-    "punchline": "A stick."
-  },
-  {
-    "setup": "What do you call a cow during an earthquake?",
-    "punchline": "A milkshake."
-  },
-  {
-    "setup": "What do you call a bear with no teeth?",
-    "punchline": "A gummy bear."
-  },
-  {
-    "setup": "What do you call a Frenchman wearing sandals?",
-    "punchline": "Philippe Flop."
-  },
-  {
-    "setup": "Why did the mop get a promotion?",
-    "punchline": "It cleaned up the competition."
-  },
-  {
-    "setup": "Where do fish keep their money?",
-    "punchline": "In the riverbank."
-  },
-  {
-    "setup": "Why was the mountain so good at telling jokes?",
-    "punchline": "It had peak timing."
-  },
-  {
-    "setup": "What's a snake's favorite subject?",
-    "punchline": "Hiss-tory."
-  },
-  {
-    "setup": "What do you call a polar bear in the jungle?",
-    "punchline": "Lost."
-  },
-  {
-    "setup": "Why did the notebook win an award?",
-    "punchline": "It was noteworthy."
-  },
-  {
-    "setup": "Why did the baker stop making donuts?",
-    "punchline": "He was fed up with the hole business."
-  },
-  {
-    "setup": "Why did the dolphin get promoted?",
-    "punchline": "It worked well with its pod."
-  },
-  {
-    "setup": "Why did the music teacher need a ladder?",
-    "punchline": "To reach the high notes."
-  },
-  {
-    "setup": "What did the fish say when it hit a wall?",
-    "punchline": "Dam."
-  },
-  {
-    "setup": "What did one plate say to the other?",
-    "punchline": "Dinner is on me."
-  },
-  {
-    "setup": "I couldn't figure out how to use my new seat belt.",
-    "punchline": "Then it clicked."
-  },
-  {
-    "setup": "Why did the coffee file a police report?",
-    "punchline": "It got mugged."
-  },
-  {
-    "setup": "I used to hate facial hair.",
-    "punchline": "But then it grew on me."
-  },
-  {
-    "setup": "What do gingerbread people sleep on?",
-    "punchline": "Cookie sheets."
-  },
-  {
-    "setup": "What's the best way to watch a fishing tournament?",
-    "punchline": "Live stream."
-  },
-  {
-    "setup": "Why don't skeletons fight each other?",
-    "punchline": "They don't have the guts."
-  },
-  {
-    "setup": "What do turtles use to communicate?",
-    "punchline": "Shell phones."
-  },
-  {
-    "setup": "How do you know the moon is going broke?",
-    "punchline": "It's down to its last quarter."
-  },
-  {
-    "setup": "How does coffee say goodbye?",
-    "punchline": "See you latte."
-  },
-  {
-    "setup": "Why did the picture go to jail?",
-    "punchline": "It was framed."
-  },
-  {
-    "setup": "What did one tortilla say to the other?",
-    "punchline": "Let's taco 'bout it."
-  },
-  {
-    "setup": "What did the stamp say to the envelope?",
-    "punchline": "Stick with me and we'll go places."
-  },
-  {
-    "setup": "What did the espresso say after a hard day?",
-    "punchline": "I'm pressed."
-  },
-  {
-    "setup": "I lost an electron.",
-    "punchline": "I'm positive."
-  },
-  {
-    "setup": "Why did the donut visit the dentist?",
-    "punchline": "It needed a filling."
-  },
-  {
-    "setup": "What do you call an octopus who plays guitar?",
-    "punchline": "A rocktopus."
-  },
-  {
-    "setup": "My friend asked whether I wanted to hear a joke about paper.",
-    "punchline": "I said, \"Sure,\" but it was tearable."
-  },
-  {
-    "setup": "Why was the calendar so popular?",
-    "punchline": "It had a lot of dates."
-  },
-  {
-    "setup": "How much room do fungi need to grow?",
-    "punchline": "As mushroom as possible."
-  },
-  {
-    "setup": "What do you call a sleeping dinosaur?",
-    "punchline": "A dino-snore."
-  },
-  {
-    "setup": "Why did the basketball player bring a suitcase?",
-    "punchline": "He was traveling."
-  },
-  {
-    "setup": "What do you call a boomerang competition with no winner?",
-    "punchline": "A toss-up."
-  },
-  {
-    "setup": "Why was the stapler so popular?",
-    "punchline": "It brought people together."
-  },
-  {
-    "setup": "Why did the astronaut bring a hamburger?",
-    "punchline": "He wanted a launch break."
-  },
-  {
-    "setup": "Why was the ice cream bad at tennis?",
-    "punchline": "It had a soft serve."
-  },
-  {
-    "setup": "What do you call a potato that broadcasts sports?",
-    "punchline": "A commen-tater."
-  },
-  {
-    "setup": "What do you call a train carrying bubble gum?",
-    "punchline": "A chew-chew train."
-  },
-  {
-    "setup": "How do you fix a broken pumpkin?",
-    "punchline": "With a pumpkin patch."
-  },
-  {
-    "setup": "Why did the mechanic sleep under the car?",
-    "punchline": "He wanted to get up oily in the morning."
-  },
-  {
-    "setup": "What's a pirate's favorite letter?",
-    "punchline": "You'd think R, but it's the C."
-  },
-  {
-    "setup": "What do you call a pig that does karate?",
-    "punchline": "A pork chop."
-  },
-  {
-    "setup": "What do you call a rock that never goes to school?",
-    "punchline": "A skipping stone."
-  },
-  {
-    "setup": "Why are cats good at video games?",
-    "punchline": "They have nine lives."
-  },
-  {
-    "setup": "What did the butter say when it told a secret?",
-    "punchline": "Don't spread this around."
-  },
-  {
-    "setup": "I don't trust stairs.",
-    "punchline": "They're always up to something."
-  },
-  {
-    "setup": "Why did the onion win the acting award?",
-    "punchline": "It could bring anyone to tears."
-  },
-  {
-    "setup": "How do you make an apple turnover?",
-    "punchline": "Push it down a hill."
-  },
-  {
-    "setup": "Why was the smartphone always polite?",
-    "punchline": "It had good cell-f control."
-  },
-  {
-    "setup": "What do you call two pears?",
-    "punchline": "A pair."
-  },
-  {
-    "setup": "Why did the chameleon lose at hide-and-seek?",
-    "punchline": "It showed its true colors."
-  },
-  {
-    "setup": "Why did the ruler get put in charge?",
-    "punchline": "It measured up."
-  },
-  {
-    "setup": "What does a bagel do when it's locked out?",
-    "punchline": "Calls a lox-smith."
-  },
-  {
-    "setup": "Why did the car get a flat tire?",
-    "punchline": "There was a fork in the road."
-  },
-  {
-    "setup": "Why did the scientist install a knocker on the door?",
-    "punchline": "To win the No-bell Prize."
-  },
-  {
-    "setup": "Why did the spreadsheet get a promotion?",
-    "punchline": "It excelled at its job."
-  },
-  {
-    "setup": "Why did the wind get a bad review?",
-    "punchline": "It kept blowing everyone off."
-  },
-  {
-    "setup": "Why did the tea bag refuse to argue?",
-    "punchline": "It didn't want to get into hot water."
-  },
-  {
-    "setup": "Why did the baseball team hire a baker?",
-    "punchline": "They needed a good batter."
-  },
-  {
-    "setup": "Why couldn't the leopard play hide-and-seek?",
-    "punchline": "It was always spotted."
-  },
-  {
-    "setup": "Why are elevator jokes so good?",
-    "punchline": "They work on many levels."
-  },
-  {
-    "setup": "Why did the office door start telling jokes?",
-    "punchline": "It wanted to make an entrance."
-  },
-  {
-    "setup": "Why was six afraid of seven?",
-    "punchline": "Because seven eight nine."
-  },
-  {
-    "setup": "Why was the office plant good at its job?",
-    "punchline": "It knew how to branch out."
-  },
-  {
-    "setup": "Why did the lime start a band?",
-    "punchline": "It wanted to be in the limelight."
-  },
-  {
-    "setup": "What did the grape say when it got stepped on?",
-    "punchline": "Nothing. It just let out a little wine."
-  },
-  {
-    "setup": "What do you call a noodle in disguise?",
-    "punchline": "An undercover carb."
-  },
-  {
-    "setup": "I tried to catch some fog yesterday.",
-    "punchline": "Mist."
-  },
-  {
-    "setup": "What do you call cheese that isn't yours?",
-    "punchline": "Nacho cheese."
-  },
-  {
-    "setup": "What do you call a cow that plays an instrument?",
-    "punchline": "A moo-sician."
-  },
-  {
-    "setup": "Why did the sandwich go to the gym?",
-    "punchline": "To get shredded."
-  },
-  {
-    "setup": "What do you call a lizard who sings?",
-    "punchline": "A lounge lizard."
-  },
-  {
-    "setup": "Why did the candle leave the party early?",
-    "punchline": "It was burned out."
-  },
-  {
-    "setup": "What kind of shoes do ninjas wear?",
-    "punchline": "Sneakers."
-  },
-  {
-    "setup": "Why do cows wear bells?",
-    "punchline": "Their horns don't work."
-  },
-  {
-    "setup": "Why did the computer get cold?",
-    "punchline": "It left its Windows open."
-  },
-  {
-    "setup": "Why did the USB drive go to the doctor?",
-    "punchline": "It couldn't remember anything."
-  },
-  {
-    "setup": "What do you call a horse that lives next door?",
-    "punchline": "A neigh-bor."
+    "setup": "Have you heard about the chocolate record player?",
+    "punchline": "It sounds pretty sweet."
   },
   {
     "setup": "What did the ocean say to the beach?",
-    "punchline": "Nothing. It just waved."
+    "punchline": "Nothing, it just waved."
   },
   {
-    "setup": "Why did the spider get a job in tech?",
-    "punchline": "It was a web developer."
+    "setup": "Why do seagulls fly over the ocean?",
+    "punchline": "Because if they flew over the bay, we'd call them bagels."
   },
   {
-    "setup": "Why did the beet join the orchestra?",
-    "punchline": "It had perfect timing."
+    "setup": "I only know 25 letters of the alphabet. But I don't know y.",
+    "punchline": ""
   },
   {
-    "setup": "I'm reading a book about anti-gravity.",
-    "punchline": "It's impossible to put down."
-  },
-  {
-    "setup": "Why did the apple go out with a fig?",
-    "punchline": "It couldn't find a date."
-  },
-  {
-    "setup": "Why did the desk refuse to dance?",
-    "punchline": "It had four left feet."
-  },
-  {
-    "setup": "What did the pie say when it won an award?",
-    "punchline": "This is a filling experience."
-  },
-  {
-    "setup": "Why did the programmer wear glasses?",
-    "punchline": "To C sharp."
-  },
-  {
-    "setup": "Why did the washing machine break up with the dryer?",
-    "punchline": "It was tired of going around in circles."
-  },
-  {
-    "setup": "How do snails keep their shells shiny?",
-    "punchline": "They use snail polish."
-  },
-  {
-    "setup": "Why was the gardener so relaxed?",
-    "punchline": "She had found her inner peas."
-  },
-  {
-    "setup": "What do you call a dinosaur that never gives up?",
-    "punchline": "A try-ceratops."
-  },
-  {
-    "setup": "I asked my dog what two minus two is.",
-    "punchline": "He said nothing."
-  },
-  {
-    "setup": "What did the sticky note say to the fridge?",
-    "punchline": "I'm stuck on you."
-  },
-  {
-    "setup": "Why was the magnet so confident?",
-    "punchline": "It knew it was attractive."
-  },
-  {
-    "setup": "What do you call a cat on a copying machine?",
-    "punchline": "A copycat."
-  },
-  {
-    "setup": "Why did the honey start a newsletter?",
-    "punchline": "It had a lot of buzz to share."
-  },
-  {
-    "setup": "What do you call a parrot in a raincoat?",
-    "punchline": "Polly unsaturated."
-  },
-  {
-    "setup": "What did the big flower say to the little flower?",
-    "punchline": "Hey, bud."
-  },
-  {
-    "setup": "Why did the email bring a suitcase?",
-    "punchline": "It had attachments."
-  },
-  {
-    "setup": "What did zero say to eight?",
-    "punchline": "Nice belt."
-  },
-  {
-    "setup": "Why did the mouse get promoted?",
-    "punchline": "It really clicked with the team."
-  },
-  {
-    "setup": "What did the avocado say at the party?",
-    "punchline": "Let's guac and roll."
-  },
-  {
-    "setup": "What do you call a group of musical whales?",
-    "punchline": "An orca-stra."
-  },
-  {
-    "setup": "Why did the panda pack a lunch?",
-    "punchline": "It didn't want to be bamboozled by restaurant prices."
-  },
-  {
-    "setup": "How do you identify a dogwood tree?",
-    "punchline": "By its bark."
-  },
-  {
-    "setup": "What do you call a fly without wings?",
-    "punchline": "A walk."
-  },
-  {
-    "setup": "How do trees get online?",
-    "punchline": "They log in."
-  },
-  {
-    "setup": "Where do sheep go on vacation?",
-    "punchline": "The Baa-hamas."
-  },
-  {
-    "setup": "I used to play piano by ear.",
-    "punchline": "Now I use my hands."
-  },
-  {
-    "setup": "Why couldn't the orchestra find its composer?",
-    "punchline": "He was Haydn."
-  },
-  {
-    "setup": "I bought a reversible jacket.",
-    "punchline": "I can't wait to see how it turns out."
-  },
-  {
-    "setup": "Why do ducks have tail feathers?",
-    "punchline": "To cover their butt-quacks."
-  },
-  {
-    "setup": "Why was the Wi-Fi router a good host?",
-    "punchline": "It made sure everyone connected."
-  },
-  {
-    "setup": "Why did the keyboard need a vacation?",
-    "punchline": "It needed some space."
-  },
-  {
-    "setup": "What did one shoe say to the other?",
-    "punchline": "We make a great pair."
-  },
-  {
-    "setup": "What do you call a hot dog race?",
-    "punchline": "Fast food."
-  },
-  {
-    "setup": "What did the garden say when it needed a break?",
-    "punchline": "I'm bushed."
-  },
-  {
-    "setup": "Why did the elephant bring a suitcase?",
-    "punchline": "It couldn't fit everything in its trunk."
-  },
-  {
-    "setup": "Why did the candy cane get an award?",
-    "punchline": "It was in mint condition."
-  },
-  {
-    "setup": "Why did the porcupine win the debate?",
-    "punchline": "It made some excellent points."
-  },
-  {
-    "setup": "Why did the lemon stop halfway through its speech?",
-    "punchline": "It ran out of zest."
-  },
-  {
-    "setup": "What did one tornado say to the other?",
-    "punchline": "Let's twist again."
-  },
-  {
-    "setup": "Why did the coffee bean leave the meeting?",
-    "punchline": "It had grounds for concern."
-  },
-  {
-    "setup": "Why did the radish start a blog?",
-    "punchline": "It had some rooted opinions."
-  },
-  {
-    "setup": "Why don't pencils tell secrets?",
-    "punchline": "They might get drawn into something."
-  },
-  {
-    "setup": "Why did the printer join a band?",
-    "punchline": "It was good at jamming."
-  },
-  {
-    "setup": "Why did the orange stop halfway up the hill?",
-    "punchline": "It ran out of juice."
-  },
-  {
-    "setup": "What did the buffalo say when his son left for school?",
-    "punchline": "Bison."
-  },
-  {
-    "setup": "Why couldn't the bicycle stand up by itself?",
-    "punchline": "It was two-tired."
-  },
-  {
-    "setup": "Why did the potato sit down?",
-    "punchline": "It needed to rest its eyes."
-  },
-  {
-    "setup": "What sound does a turkey's phone make?",
-    "punchline": "Wing, wing!"
-  },
-  {
-    "setup": "I used to work in a shoe recycling shop.",
-    "punchline": "It was sole-destroying."
-  },
-  {
-    "setup": "Why was the light bulb always optimistic?",
-    "punchline": "It looked on the bright side."
-  },
-  {
-    "setup": "What do you call a bee from the United States?",
-    "punchline": "A USB."
-  },
-  {
-    "setup": "How do you fix a broken tomato?",
-    "punchline": "With tomato paste."
+    "setup": "How does the moon cut his hair?",
+    "punchline": "Eclipse it."
   },
   {
     "setup": "What did one wall say to the other?",
     "punchline": "I'll meet you at the corner."
   },
   {
-    "setup": "What do you call a dog that can do magic?",
-    "punchline": "A labracadabrador."
+    "setup": "What did the zero say to the eight?",
+    "punchline": "That belt looks good on you."
   },
   {
-    "setup": "Why did the chicken join a band?",
-    "punchline": "It had the drumsticks."
+    "setup": "A skeleton walks into a bar and says, Hey, bartender. I'll have a Pepsi and a mop.",
+    "punchline": ""
   },
   {
-    "setup": "What did the drummer name his twin daughters?",
-    "punchline": "Anna one, Anna two."
+    "setup": "Where do fruits go on vacation?",
+    "punchline": "Pear-is!"
   },
   {
-    "setup": "Why don't scientists trust atoms?",
-    "punchline": "They make up everything."
+    "setup": "I asked my dog what's two minus two. He said nothing.",
+    "punchline": ""
   },
   {
-    "setup": "What do planets like to read?",
-    "punchline": "Comet books."
+    "setup": "What did one toilet say to the other toilet?",
+    "punchline": "You look a little flushed."
   },
   {
-    "setup": "Why was the belt arrested?",
-    "punchline": "It was holding up a pair of pants."
+    "setup": "How do you measure a snake?",
+    "punchline": "In inches. They don’t have feet."
   },
   {
-    "setup": "What kind of music do balloons hate?",
-    "punchline": "Pop."
+    "setup": "What is the difference between a hippo and a zippo?",
+    "punchline": "One’s really heavy and the other is a little lighter."
   },
   {
-    "setup": "What do you call a cat that loves bowling?",
-    "punchline": "An alley cat."
+    "setup": "I took my dog to the park, & the ducks kept biting him. I guess that’s what you get from having a “pure bread” dog.",
+    "punchline": ""
   },
   {
-    "setup": "Why did the paper clip get a promotion?",
-    "punchline": "It held everything together under pressure."
+    "setup": "Why don’t ants get sick?",
+    "punchline": "Because they have little antibodies."
   },
   {
-    "setup": "Why was the geologist always calm?",
-    "punchline": "Nothing could take her for granite."
+    "setup": "Do you want to hear a construction joke?",
+    "punchline": "Sorry I am still working on it."
   },
   {
-    "setup": "What did the cheese say to itself after a long day?",
-    "punchline": "It'll brie okay."
+    "setup": "What does a cheetah call an antelope?",
+    "punchline": "Fast food."
   },
   {
-    "setup": "What do you call a cow with no legs?",
-    "punchline": "Ground beef."
+    "setup": "What kind of shorts do clouds wear?",
+    "punchline": "Thunder Pants"
   },
   {
-    "setup": "Why did the cheese look in the mirror?",
-    "punchline": "It wanted to look sharp."
+    "setup": "Why is cold water so insecure?",
+    "punchline": "Because it is never called hot."
   },
   {
-    "setup": "What do you call a frog with a broken leg?",
-    "punchline": "Unhoppy."
+    "setup": "What did Baby Corn say to Mama Corn?",
+    "punchline": "Where's Pop Corn?"
   },
   {
-    "setup": "What do you call a lobster answering the phone?",
-    "punchline": "A shell operator."
+    "setup": "What's the best thing about Switzerland?",
+    "punchline": "I don't know, but the flag is a big plus."
   },
   {
-    "setup": "Why did the noodle get promoted?",
-    "punchline": "It used its head and pasta experience."
+    "setup": "What does a sprinter eat before a race?",
+    "punchline": "Nothing, they fast!"
   },
   {
-    "setup": "What do you call a nosy pepper?",
-    "punchline": "Jalapeño business."
+    "setup": "Where do you learn to make a banana split?",
+    "punchline": "Sundae school."
   },
   {
-    "setup": "Why did the pencil lose the debate?",
-    "punchline": "It couldn't make a point."
+    "setup": "What has more letters than the alphabet?",
+    "punchline": "The post office!"
   },
   {
-    "setup": "Why did the salt apologize?",
-    "punchline": "It had been a little coarse."
+    "setup": "Dad, did you get a haircut?",
+    "punchline": "No, I got them all cut!"
   },
   {
-    "setup": "Why was the raisin worried about its vacation?",
-    "punchline": "It didn't want to be left high and dry."
+    "setup": "What do you call a poor Santa Claus?",
+    "punchline": "St. Nickel-less."
   },
   {
-    "setup": "What did the toast say to the butter?",
-    "punchline": "You're my butter half."
+    "setup": "I got carded at a liquor store, and my Blockbuster card accidentally fell out. The cashier said never mind.",
+    "punchline": ""
   },
   {
-    "setup": "Why did the shark blush?",
-    "punchline": "It saw the ocean's bottom."
+    "setup": "Where do boats go when they're sick?\" \"To the boat doc.",
+    "punchline": ""
   },
   {
-    "setup": "Why did the sun skip college?",
-    "punchline": "It already had a million degrees."
+    "setup": "I don't trust those trees. They seem kind of shady.",
+    "punchline": ""
   },
   {
-    "setup": "What do you call a pastry that tells jokes?",
-    "punchline": "A pun-cake."
+    "setup": "My wife is really mad at the fact that I have no sense of direction. So I packed up my stuff and right!",
+    "punchline": ""
   },
   {
-    "setup": "What do you call a whale with a great idea?",
-    "punchline": "A deep thinker."
-  },
-  {
-    "setup": "Why did the laptop go to the doctor?",
-    "punchline": "It had a virus."
-  },
-  {
-    "setup": "Someone stole my mood ring.",
-    "punchline": "I don't know how I feel about that."
-  },
-  {
-    "setup": "Why did the zipper win an award?",
-    "punchline": "It brought two sides together."
-  },
-  {
-    "setup": "What's a crocodile's favorite card game?",
-    "punchline": "Snap."
-  },
-  {
-    "setup": "What do you call stolen cocoa?",
-    "punchline": "Hot chocolate."
-  },
-  {
-    "setup": "What happens when it rains cats and dogs?",
-    "punchline": "You have to watch out for poodles."
-  },
-  {
-    "setup": "Why did the cookie go to the doctor?",
-    "punchline": "It felt crummy."
-  },
-  {
-    "setup": "Why did the river go to the bank?",
-    "punchline": "To check its current balance."
-  },
-  {
-    "setup": "What did the caterpillar say after lunch?",
-    "punchline": "That really hit the spot. All of them."
-  },
-  {
-    "setup": "I wondered why the baseball kept getting bigger.",
-    "punchline": "Then it hit me."
-  },
-  {
-    "setup": "I used to be a personal trainer.",
-    "punchline": "Then I gave my too-weak notice."
-  },
-  {
-    "setup": "What do you call a bear caught in the rain?",
-    "punchline": "A drizzly bear."
-  },
-  {
-    "setup": "How do you make a water bed bouncier?",
-    "punchline": "Add spring water."
-  },
-  {
-    "setup": "Why did the banana go to the doctor?",
-    "punchline": "It wasn't peeling well."
-  },
-  {
-    "setup": "Why did the phone wear glasses?",
-    "punchline": "It lost its contacts."
-  },
-  {
-    "setup": "Why did the skunk lose the argument?",
-    "punchline": "Its reasoning stunk."
-  },
-  {
-    "setup": "Why don't koalas count as bears?",
-    "punchline": "They don't have the koalifications."
-  },
-  {
-    "setup": "Why did the book join the police?",
-    "punchline": "It wanted to work undercover."
-  },
-  {
-    "setup": "What do you call a hamburger that tells jokes?",
-    "punchline": "A pun on a bun."
-  },
-  {
-    "setup": "Why did the computer go to the optician?",
-    "punchline": "To improve its website."
-  },
-  {
-    "setup": "Why did the student bring a ladder to school?",
-    "punchline": "She wanted to go to high school."
-  },
-  {
-    "setup": "I gave all my dead batteries away.",
-    "punchline": "Free of charge."
+    "setup": "How do you get a squirrel to like you?",
+    "punchline": "Act like a nut."
   },
   {
     "setup": "Why don't eggs tell jokes?",
     "punchline": "They'd crack each other up."
   },
   {
-    "setup": "Why should you never argue with a 90-degree angle?",
-    "punchline": "It's always right."
+    "setup": "I don't trust stairs. They're always up to something.",
+    "punchline": ""
   },
   {
-    "setup": "Why did the golfer bring two pairs of pants?",
-    "punchline": "In case he got a hole in one."
+    "setup": "What do you call someone with no body and no nose?",
+    "punchline": "Nobody knows."
   },
   {
-    "setup": "Why did the librarian get kicked off the plane?",
-    "punchline": "It was overbooked."
+    "setup": "Did you hear the rumor about butter?",
+    "punchline": "Well, I'm not going to spread it!"
   },
   {
-    "setup": "I used to sell furniture for a living.",
-    "punchline": "The trouble was, it was my own."
+    "setup": "Why couldn't the bicycle stand up by itself?",
+    "punchline": "It was two tired."
   },
   {
-    "setup": "Why did the squirrel bring a ladder to work?",
-    "punchline": "It was climbing the corporate tree."
+    "setup": "What did one hat say to the other?\" \"Stay here! I'm going on ahead.",
+    "punchline": ""
   },
   {
-    "setup": "Why is it hard to play poker in the jungle?",
-    "punchline": "Too many cheetahs."
+    "setup": "Why did Billy get fired from the banana factory?",
+    "punchline": "He kept throwing away the bent ones."
   },
   {
-    "setup": "Why did the duck take a second job?",
-    "punchline": "It had too many bills."
+    "setup": "I asked my dog what’s 2-2, and he said... nothing!",
+    "punchline": ""
   },
   {
-    "setup": "Why do programmers prefer dark mode?",
-    "punchline": "Light attracts bugs."
+    "setup": "Dad, can you put my shoes on?",
+    "punchline": "No, I don't think they'll fit me."
   },
   {
-    "setup": "Why did the scarecrow win an award?",
-    "punchline": "He was outstanding in his field."
+    "setup": "Why can't a nose be 12 inches long?",
+    "punchline": "Because then it would be a foot."
   },
   {
-    "setup": "What did the grape say when it got some surprising news?",
-    "punchline": "You've got to be raisin me!"
+    "setup": "What does a lemon say when it answers the phone?",
+    "punchline": "Yellow!"
   },
   {
-    "setup": "What do you call a line of rabbits walking backward?",
-    "punchline": "A receding hare-line."
+    "setup": "This graveyard looks overcrowded. People must be dying to get in.",
+    "punchline": ""
   },
   {
-    "setup": "Why did the umbrella get promoted?",
-    "punchline": "It had everyone covered."
+    "setup": "What kind of car does an egg drive?",
+    "punchline": "A yolks-wagon."
   },
   {
-    "setup": "How do you get a baby astronaut to sleep?",
-    "punchline": "You rocket."
+    "setup": "Dad, can you put the cat out?",
+    "punchline": "I didn't know it was on fire."
   },
   {
-    "setup": "I'd tell you a construction joke.",
-    "punchline": "But I'm still working on it."
+    "setup": "How do you make 7 even?",
+    "punchline": "Take away the s."
   },
   {
-    "setup": "What do you call a grizzly with headphones?",
-    "punchline": "Anything you like. It can't hear you."
+    "setup": "How does a taco say grace?",
+    "punchline": "Lettuce pray."
   },
   {
-    "setup": "What did the triangle say to the circle?",
-    "punchline": "You're pointless."
+    "setup": "What time did the man go to the dentist?",
+    "punchline": "Tooth hurt-y."
   },
   {
-    "setup": "Why did the mirror get a good review?",
-    "punchline": "It always reflected well on the company."
+    "setup": "Why didn't the skeleton climb the mountain?",
+    "punchline": "It didn't have the guts."
+  },
+  {
+    "setup": "What do you call it when a snowman throws a tantrum?",
+    "punchline": "A meltdown."
+  },
+  {
+    "setup": "How many tickles does it take to make an octopus laugh?",
+    "punchline": "Ten tickles."
+  },
+  {
+    "setup": "What has four wheels and flies?",
+    "punchline": "A Garbage truck."
+  },
+  {
+    "setup": "I have a joke about chemistry, but I don't think it will get a reaction.",
+    "punchline": ""
+  },
+  {
+    "setup": "What concert costs just 45 cents?",
+    "punchline": "50 Cent featuring Nickelback!"
+  },
+  {
+    "setup": "What does a bee use to brush its hair?\" \"A honeycomb!",
+    "punchline": ""
   },
   {
     "setup": "How do you make a tissue dance?",
-    "punchline": "Put a little boogie in it."
+    "punchline": "You put a little boogie in it."
   },
   {
-    "setup": "Why did the sofa apply for a job?",
-    "punchline": "It wanted to cushion its savings."
+    "setup": "Why did the math book look so sad?",
+    "punchline": "Because of all of its problems!"
   },
   {
-    "setup": "I used to be addicted to the hokey pokey.",
-    "punchline": "But I turned myself around."
+    "setup": "What do you call cheese that isn't yours?",
+    "punchline": "Nacho cheese."
   },
   {
-    "setup": "What kind of tree fits in your hand?",
-    "punchline": "A palm tree."
+    "setup": "My dad told me a joke about boxing. I guess I missed the punch line.",
+    "punchline": ""
   },
   {
-    "setup": "What do you call a Ford Fiesta that ran out of gas?",
-    "punchline": "A Ford Siesta."
+    "setup": "What kind of shoes do ninjas wear?",
+    "punchline": "Sneakers!"
+  },
+  {
+    "setup": "How does a penguin build its house?",
+    "punchline": "Igloos it together."
+  },
+  {
+    "setup": "How did Harry Potter get down the hill?",
+    "punchline": "Walking. JK! Rowling."
+  },
+  {
+    "setup": "I used to be addicted to soap, but I'm clean now.",
+    "punchline": ""
+  },
+  {
+    "setup": "A guy walks into a bar... and he was disqualified from the limbo contest.",
+    "punchline": ""
+  },
+  {
+    "setup": "You think swimming with sharks is expensive?",
+    "punchline": "Swimming with sharks cost me an arm and a leg."
+  },
+  {
+    "setup": "When two vegans get in an argument, is it still called a beef?",
+    "punchline": ""
+  },
+  {
+    "setup": "I ordered a chicken and an egg from Amazon. I will let you know...",
+    "punchline": ""
+  },
+  {
+    "setup": "Dad. “Do you want a box for your leftovers?",
+    "punchline": "Son: “No, but I'll wrestle you for them."
+  },
+  {
+    "setup": "That car looks nice but the muffler seems exhausted.",
+    "punchline": ""
+  },
+  {
+    "setup": "Shout out to my fingers. I can count on all of them.",
+    "punchline": ""
+  },
+  {
+    "setup": "You know people say they pick their nose but I feel I was just born with mine.",
+    "punchline": ""
+  },
+  {
+    "setup": "If a child refuses to nap, are they guilty of resisting a rest?",
+    "punchline": ""
+  },
+  {
+    "setup": "What country's capital is growing the fastest?\" \"Ireland. Every day it's Dublin.",
+    "punchline": ""
+  },
+  {
+    "setup": "I once had a dream I was floating in an ocean of orange soda. It was more of a Fanta-sea.",
+    "punchline": ""
+  },
+  {
+    "setup": "Did you know corduroy pillows are in style?",
+    "punchline": "They're making headlines.\""
+  },
+  {
+    "setup": "Did you hear about the kidnapping at school?",
+    "punchline": "It's okay, he woke up."
+  },
+  {
+    "setup": "A cheeseburger walks into a bar. The bartender says, 'Sorry, we don't serve food here.",
+    "punchline": ""
+  },
+  {
+    "setup": "I once got fired from a canned juice company. A’pear’ently I couldn't concentrate.",
+    "punchline": ""
+  },
+  {
+    "setup": "I used to play piano by ear. Now I use my hands.",
+    "punchline": ""
+  },
+  {
+    "setup": "Have you ever tried to catch a fog?",
+    "punchline": "I tried yesterday but I mist."
+  },
+  {
+    "setup": "I started a new diet… it’s the seafood diet. When I see food and I eat it.",
+    "punchline": ""
+  },
+  {
+    "setup": "Why did the scarecrow win an award?",
+    "punchline": "Because he was outstanding in his field."
+  },
+  {
+    "setup": "I made a pencil with two erasers. It was pointless.",
+    "punchline": ""
+  },
+  {
+    "setup": "How do you make a Kleenex dance?",
+    "punchline": "Put a little boogie in it!"
+  },
+  {
+    "setup": "I'm reading a book about anti-gravity. It is impossible to put down!",
+    "punchline": ""
+  },
+  {
+    "setup": "Did you hear about the guy who invented the knock-knock joke?",
+    "punchline": "He won the 'no-bell' prize."
+  },
+  {
+    "setup": "Why did the scarecrow win an award?",
+    "punchline": "Because he was outstanding in his field!"
+  },
+  {
+    "setup": "I've got a great joke about construction, but I'm still working on it.",
+    "punchline": ""
+  },
+  {
+    "setup": "I used to hate facial hair...but then it grew on me.\"",
+    "punchline": ""
+  },
+  {
+    "setup": "I decided to sell my vacuum cleaner— it was just gathering dust!",
+    "punchline": ""
+  },
+  {
+    "setup": "I had a neck brace fitted years ago and I've never looked back since.",
+    "punchline": ""
+  },
+  {
+    "setup": "You know, people say they pick their nose, but I feel like I was just born with mine.",
+    "punchline": ""
+  },
+  {
+    "setup": "What's brown and sticky?",
+    "punchline": "A stick."
+  },
+  {
+    "setup": "Why can't you hear a psychiatrist using the bathroom?",
+    "punchline": "Because the 'P' is silent."
+  },
+  {
+    "setup": "What do you call an elephant that doesn't matter?",
+    "punchline": "An irrelephant."
+  },
+  {
+    "setup": "What do you get from a pampered cow?",
+    "punchline": "Spoiled milk."
+  },
+  {
+    "setup": "I like telling Dad jokes. Sometimes he laughs!",
+    "punchline": ""
+  },
+  {
+    "setup": "What's the best smelling insect?\" \"A deodor-ant.",
+    "punchline": ""
+  },
+  {
+    "setup": "I used to be a personal trainer. Then I gave my too weak notice.",
+    "punchline": ""
+  },
+  {
+    "setup": "Did I tell you the time I fell in love during a backflip?",
+    "punchline": "I was heels overhead!"
+  },
+  {
+    "setup": "If a child refuses to sleep during nap time, are they guilty of resisting a rest?",
+    "punchline": ""
+  },
+  {
+    "setup": "I ordered a chicken and an egg online. I’ll let you know.",
+    "punchline": ""
+  },
+  {
+    "setup": "It takes guts to be an organ donor.",
+    "punchline": ""
+  },
+  {
+    "setup": "If you see a crime at an Apple Store, does that make you an iWitness?",
+    "punchline": ""
+  },
+  {
+    "setup": "I'm so good at sleeping, I can do it with my eyes closed!",
+    "punchline": ""
+  },
+  {
+    "setup": "I was going to tell a time-traveling joke, but you guys didn't like it.",
+    "punchline": ""
+  },
+  {
+    "setup": "What do you call a fake noodle?\" \"An impasta.\"",
+    "punchline": ""
+  },
+  {
+    "setup": "What do you call a belt made of watches?\" \"A waist of time.\"",
+    "punchline": ""
+  },
+  {
+    "setup": "What happens when a strawberry gets run over crossing the street?\" \"Traffic jam.",
+    "punchline": ""
+  },
+  {
+    "setup": "What do you call two monkeys that share an Amazon account?\" \"Prime mates.\"",
+    "punchline": ""
+  },
+  {
+    "setup": "What do you call a pony with a sore throat?\" \"A little hoarse.\"",
+    "punchline": ""
+  },
+  {
+    "setup": "Where do math teachers go on vacation?\" \"Times Square.\"",
+    "punchline": ""
+  },
+  {
+    "setup": "Whenever I try to eat healthy, a chocolate bar looks at me and Snickers.\"",
+    "punchline": ""
+  },
+  {
+    "setup": "What does garlic do when it gets hot?",
+    "punchline": "It takes its cloves off."
+  },
+  {
+    "setup": "What's a robot's favorite snack?",
+    "punchline": "Computer chips."
+  },
+  {
+    "setup": "How much does it cost Santa to park his sleigh?",
+    "punchline": "Nothing, it's on the house."
+  },
+  {
+    "setup": "Mountains aren't just funny. They're hill areas.",
+    "punchline": ""
+  },
+  {
+    "setup": "Why are piggy banks so wise?",
+    "punchline": "They are filled with common cents."
+  },
+  {
+    "setup": "Son: Daddddd please help me put my shoes on… Dad: just slip your foot in and pull on the tongue. Son: What do I do now?” (While pretending to pull on tongue)",
+    "punchline": ""
+  },
+  {
+    "setup": "How do you turn water into holy water?",
+    "punchline": "You boil the hell out of it."
   }
 ];
 
